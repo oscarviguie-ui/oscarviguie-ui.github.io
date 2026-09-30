@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Keeps the page (and your résumé) out of search engines. Remove if you want it indexed. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Oscar Viguie</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230A66C2'/><text x='50' y='64' font-family='Arial' font-size='40' font-weight='700' fill='white' text-anchor='middle'>OV</text></svg>">
+<style>
+  :root {
+    --page: #F4F2EE;
+    --card: #FFFFFF;
+    --text: #1D1D1D;
+    --muted: #666666;
+    --border: #E0DFDC;
+    --blue: #0A66C2;
+    --blue-hover: #004182;
+    --on-blue: #FFFFFF;
+    --green: #057642;
+    --green-bg: #E7F3EC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #000000;
+      --card: #1B1F23;
+      --text: #E9E9E9;
+      --muted: #A8A8A8;
+      --border: #38434F;
+      --blue: #71B7FB;
+      --blue-hover: #A8D4FF;
+      --on-blue: #1B1F23;
+      --green: #4FC37E;
+      --green-bg: #1E3528;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+  html { height: 100%; }
+  body {
+    min-height: 100%;
+    background: var(--page);
+    color: var(--text);
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    padding-top: env(safe-area-inset-top, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); /* room for mobile bar */
+    max-width: 40rem;
+    margin: 0 auto;
+    grid-template-areas: "side" "resume";
+  }
+  .side { grid-area: side; }
+  .resume { grid-area: resume; min-width: 0; }
+
+  @media (min-width: 900px) {
+    .layout {
+      max-width: none;
+      grid-template-columns: minmax(0, 850px) 320px;
+      grid-template-areas: "resume side";
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+    .side {
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+    }
+  }
+
+  /* ---------- Profile card ---------- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem 1.5rem 1.5rem;
+  }
+  .profile { text-align: center; }
+  .avatar {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: var(--on-blue);
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    font-weight: 600;
+    object-fit: cover;
+  }
+  h1 { font-size: 1.5rem; font-weight: 600; line-height: 1.25; }
+  .field { margin-top: .25rem; }
+  .status {
+    display: inline-block;
+    margin-top: .75rem;
+    padding: .25rem .75rem;
+    border-radius: 999px;
+    background: var(--green-bg);
+    color: var(--green);
+    font-size: .875rem;
+    font-weight: 600;
+  }
+
+  .actions { display: grid; gap: .625rem; margin-top: 1.5rem; }
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color .15s, box-shadow .15s;
+  }
+  .btn-primary { background: var(--blue); color: var(--on-blue); }
+  .btn-primary:hover { background: var(--blue-hover); }
+  .btn-secondary { box-shadow: inset 0 0 0 1px var(--blue); color: var(--blue); }
+  .btn-secondary:hover { box-shadow: inset 0 0 0 2px var(--blue); }
+
+  .contact {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .contact h2 { font-size: 1.125rem; font-weight: 600; margin-bottom: .75rem; }
+  .contact dl { display: grid; gap: .75rem; }
+  .contact dt { font-size: .875rem; font-weight: 600; }
+  .contact dd { font-size: .9375rem; }
+  .contact a { color: var(--blue); font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+  .contact a:hover { text-decoration: underline; }
+
+  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  /* ---------- Résumé ---------- */
+  .resume-pages { display: grid; gap: 1rem; }
+  .page {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .resume-note {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: var(--muted);
+  }
+  .resume-note a { color: var(--blue); font-weight: 600; }
+
+  /* ---------- Mobile bar: always reachable while scrolling the résumé ---------- */
+  .bar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: .5rem;
+    padding: .625rem 1rem calc(.625rem + env(safe-area-inset-bottom, 0px));
+    background: var(--card);
+    border-top: 1px solid var(--border);
+  }
+  .bar .btn { min-height: 2.75rem; padding: 0 .75rem; font-size: .9375rem; }
+  @media (min-width: 900px) { .bar { display: none; } }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="side">
+    <section class="card">
+      <div class="profile">
+        <!-- To use a photo instead: put photo.jpg in the repo and replace this div with
+             <img class="avatar" src="photo.jpg" alt="Oscar Viguie"> -->
+        <div class="avatar" aria-hidden="true">OV</div>
+        <h1>Oscar Viguie</h1>
+        <p class="field">Energy economics</p>
+        <p class="status">Open to Work</p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="https://www.linkedin.com/in/oscar-viguie/" target="_blank" rel="noopener">View LinkedIn profile</a>
+          <a class="btn btn-secondary" href="resume.pdf" download="Oscar-Viguie-Resume.pdf">Download résumé</a>
+        </div>
+      </div>
+
+      <div class="contact">
+        <h2>Contact Info</h2>
+        <dl>
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:oscar.viguie@gmail.com">oscar.viguie@gmail.com</a></dd>
+          </div>
+          <div>
+            <dt>Phone</dt>
+            <dd><a href="tel:+33759625766">07 59 62 57 66</a></dd>
+          </div>
+          <div>
+            <dt>LinkedIn</dt>
+            <dd><a href="https://www.linkedin.com/in/oscar-viguie/" target="_blank" rel="noopener">linkedin.com/in/oscar-viguie</a></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </aside>
+
+  <main class="resume" aria-label="Résumé">
+    <div id="resume-pages" class="resume-pages">
+      <p class="resume-note">Loading résumé…</p>
+    </div>
+  </main>
+
+</div>
+
+<nav class="bar" aria-label="Quick contact">
+  <a class="btn btn-primary" href="https://www.linkedin.com/in/oscar-viguie/" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="btn btn-secondary" href="mailto:oscar.viguie@gmail.com">Email</a>
+  <a class="btn btn-secondary" href="tel:+33759625766">Call</a>
+</nav>
+
+<!-- PDF.js renders the résumé as images so it displays fully on iPhone, Android and desktop alike.
+     If anything fails, the page falls back to the browser's own PDF viewer. -->
+<script>
+  (function () {
+    const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+    const container = document.getElementById('resume-pages');
+    let done = false;
+
+    function fallback() {
+      if (done) return;
+      done = true;
+      const wide = window.matchMedia('(min-width: 900px)').matches;
+      container.innerHTML = wide
+        ? '<iframe class="page" src="resume.pdf" title="Résumé" style="height:85vh"></iframe>'
+        : '<p class="resume-note"><a href="resume.pdf" target="_blank" rel="noopener">Open my résumé (PDF)</a></p>';
+    }
+
+    // Give up after 10 s rather than leaving "Loading…" on screen
+    const timer = setTimeout(fallback, 10000);
+
+    const script = document.createElement('script');
+    script.src = PDFJS + 'pdf.min.js';
+    script.crossOrigin = 'anonymous';
+    script.onerror = fallback;
+    script.onload = function () {
+      try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + 'pdf.worker.min.js';
+      } catch (e) { fallback(); return; }
+
+      let pdf = null, lastWidth = 0, renderId = 0;
+
+      async function render() {
+        const width = container.clientWidth;
+        if (!pdf || Math.abs(width - lastWidth) < 2) return;
+        lastWidth = width;
+        const id = ++renderId;
+        const dpr = Math.min(window.devicePixelRatio || 1, 3);
+        const pages = [];
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const base = page.getViewport({ scale: 1 });
+          const viewport = page.getViewport({ scale: (width / base.width) * dpr });
+          const canvas = document.createElement('canvas');
+          canvas.className = 'page';
+          canvas.width = Math.floor(viewport.width);
+          canvas.height = Math.floor(viewport.height);
+          canvas.setAttribute('role', 'img');
+          canvas.setAttribute('aria-label', 'Résumé page ' + i);
+          await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+          if (id !== renderId) return; // a newer resize started; drop this pass
+          pages.push(canvas);
+        }
+        clearTimeout(timer);
+        done = true;
+        container.replaceChildren(...pages);
+      }
+
+      pdfjsLib.getDocument('resume.pdf').promise
+        .then(doc => { pdf = doc; return render(); })
+        .catch(fallback);
+
+      let t;
+      window.addEventListener('resize', () => {
+        if (!pdf) return;
+        clearTimeout(t);
+        t = setTimeout(() => render().catch(() => {}), 200);
+      });
+    };
+    document.head.appendChild(script);
+  })();
+</script>
+</body>
+</html>
